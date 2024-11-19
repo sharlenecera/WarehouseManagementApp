@@ -33,3 +33,6 @@ class InventorySection:
                 raise ValueError(e)
         else:
             raise ValueError("Item not found")
+    
+    def __str__(self):
+        return f"Section: {self.name}"
