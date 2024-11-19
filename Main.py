@@ -79,11 +79,11 @@ class WarehouseApp(tk.Tk):
         if section_name and name and quantity >= 0:
             if self.add_item_expiry.get():
                 print("You tried to add a perishable item")
-                # item = PerishableItem(name, quantity, self.add_item_expiry.get())
+                item = PerishableItem(name, quantity, self.add_item_expiry.get())
             else:
                 print("You tried to add a regular item")
-                # item = RegularItem(name, quantity)
-            # self.inventory_manager.add_item(section_name, item)
+                item = RegularItem(name, quantity)
+            self.inventory_manager.add_item(section_name, item)
             self.update_inventory()
         else:
             messagebox.showerror("Error", "Invalid item details")
