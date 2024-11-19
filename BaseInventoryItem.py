@@ -11,4 +11,4 @@ class InventoryItem:
         raise NotImplementedError
     
     def __str__(self):
-        return f"{self.mame}: {self.quantity}"
+        return f"{self.name}: {self.quantity}"
