@@ -15,6 +15,14 @@ class WarehouseApp(tk.Tk):
         self.create_widgets()
         self.update_inventory()
 
+    def create_add_widget(self, text, add_bool=False, varName=""):
+        tk.Label(self, text=text).pack()
+        varName = text if not varName else varName
+        add_string = "add_" if add_bool else ""
+        var_name = f"{add_string}{"_".join(x.lower() for x in varName.split())}"
+        self.__dict__[var_name] = tk.Entry(self)
+        self.__dict__[var_name].pack()
+
     def create_widgets(self):
         # Section selection
 
@@ -24,26 +32,15 @@ class WarehouseApp(tk.Tk):
         self.section_menu.pack()
 
         # Item adding fields
-        tk.Label(self, text="Item Name").pack()
-        self.add_item_name = tk.Entry(self)
-        self.add_item_name.pack()
-
-        tk.Label(self, text="Item Quantity").pack()
-        self.add_item_quantity = tk.Entry(self)
-        self.add_item_quantity.pack()
-
-
-        tk.Label(self, text="Expiry Date (Optional, DD/MM/YYYY) ").pack()
-        self.add_item_expiry = tk.Entry(self)
-        self.add_item_expiry.pack()
+        self.create_add_widget("Item Name", True)
+        self.create_add_widget("Item Quantity", True)
+        self.create_add_widget("Expiry Date (Optional, DD/MM/YYYY) ", True, "Item Expiry")
 
         self.add_item_button = tk.Button(self, text="Add Item", command=self.add_item)
         self.add_item_button.pack()
 
         # UI for Managing stock
-        tk.Label(self, text="Stock Amount").pack()
-        self.stock_amount = tk.Entry(self)
-        self.stock_amount.pack()
+        self.create_add_widget("Stock Amount")
         self.add_stock_button = tk.Button(self, text="Add Stock", command=self.add_stock)
         self.add_stock_button.pack()
         self.remove_stock_button = tk.Button(self, text="Remove Stock",
