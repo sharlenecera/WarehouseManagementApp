@@ -127,6 +127,7 @@ class WarehouseApp(tk.Tk):
 
 # Initialise and run the application
 if __name__ == "__main__":
+    
     inventory_manager = InventoryManager()
     # Adding initial sections
     inventory_manager.add_section(InventorySection("Electronics"))
