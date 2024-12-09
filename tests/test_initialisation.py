@@ -12,9 +12,9 @@ def test_always_passes():
 def test_always_fails():
     assert False
 
-def test_inventory_has_initial_sections(warehouse_app):
+def test_inventory_has_initial_sections(initial_warehouse_app):
     assert list(warehouse_app.inventory_manager.sections.keys()) == ['Electronics', 'Automotive']
 
-def test_initial_sections_are_empty(warehouse_app):
+def test_initial_sections_are_empty(initial_warehouse_app):
     for section in warehouse_app.inventory_manager.sections.values():
         assert section.items == {}
