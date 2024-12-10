@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import messagebox, simpledialog
+from tkinter import messagebox, simpledialog, filedialog
 
 from InventoryManagement import InventoryManager
 from Sections import InventorySection
@@ -72,6 +72,13 @@ class WarehouseApp(tk.Tk):
         self.inventory_text = tk.Text(self, height=15, width=50)
         self.inventory_text.pack()
 
+        # UI for saving and loading inventory to and from JSON files
+        self.save_to_json_button = tk.Button(self, text="Save as JSON", command=self.save_to_json)
+        self.save_to_json_button.pack()
+
+        self.load_from_json_button = tk.Button(self, text="Load from JSON", command=self.load_from_json)
+        self.load_from_json_button.pack()
+
     def add_item(self):
         section_name = self.section_var.get()
         name = self.add_item_name.get()
@@ -125,6 +132,22 @@ class WarehouseApp(tk.Tk):
         for item in inventory:
             self.inventory_text.insert(tk.END, item + "\n")
 
+    def save_to_json(self):
+        file_name = filedialog.asksaveasfilename(
+            defaultextension=".json",
+            filetypes=[("JSON files", "*.json"), ("All files", "*.*")]
+        )
+        if file_name:
+            self.inventory_manager.save_to_json(file_name)
+
+    def load_from_json(self):
+        file_name = filedialog.askopenfilename(
+            defaultextension=".json",
+            filetypes=[("JSON files", "*.json"), ("All files", "*.*")]
+        )
+        if file_name:
+            self.inventory_manager.load_from_json(file_name)
+            self.update_inventory()
 # Initialise and run the application
 if __name__ == "__main__":
     
