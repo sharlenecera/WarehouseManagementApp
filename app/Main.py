@@ -115,6 +115,7 @@ class WarehouseApp(tk.Tk):
                 item = RegularItem(name, quantity)
             self.inventory_manager.add_item(section_name, item)
             self.update_inventory()
+            self.clear_fields()
         elif quantity < 0:
             messagebox.showerror("Error", "Quantity is invalid.")
         else:
@@ -140,6 +141,7 @@ class WarehouseApp(tk.Tk):
         try:
             self.inventory_manager.add_stock(section_name, name, amount)
             self.update_inventory()
+            self.clear_fields()
         except ValueError as e:
             messagebox.showerror("Error", str(e))
 
@@ -163,6 +165,7 @@ class WarehouseApp(tk.Tk):
         try:
             self.inventory_manager.remove_stock(section_name, name, amount)
             self.update_inventory()
+            self.clear_fields()
         except ValueError as e:
             messagebox.showerror("Error", str(e))
 
@@ -187,6 +190,7 @@ class WarehouseApp(tk.Tk):
         try:
             self.inventory_manager.move_stock(from_section_name, to_section_name, item_name, amount)
             self.update_inventory()
+            self.clear_fields()
         except ValueError as e:
             messagebox.showerror("Error", str(e))
 
@@ -204,6 +208,14 @@ class WarehouseApp(tk.Tk):
         results = self.inventory_manager.search_inventory(search)
         self.inventory_text.delete(1.0, tk.END)
         self.format_inventory_text(results)
+
+    def clear_fields(self):
+        self.add_item_name.delete(0, tk.END)
+        self.add_item_quantity.delete(0, tk.END)
+        self.add_item_expiry.delete(0, tk.END)
+        self.stock_amount.delete(0, tk.END)
+        self.move_item_name.delete(0, tk.END)
+        self.move_amount.delete(0, tk.END)
 
     def save_to_json(self):
         file_name = filedialog.asksaveasfilename(
