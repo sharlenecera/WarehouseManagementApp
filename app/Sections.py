@@ -32,7 +32,7 @@ class InventorySection:
             except ValueError as e:
                 raise ValueError(e)
         else:
-            raise ValueError("Item not found")
+            raise ValueError("Item does not exist in selected section.")
     
     def __str__(self):
         return f"Section: {self.name}"

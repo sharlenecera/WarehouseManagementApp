@@ -39,21 +39,23 @@ class InventoryManager:
             try:
                 section.remove_stock(name, amount)
             except ValueError as e:
-                raise ValueError(e)
+                raise ValueError("Not enough stock to remove selected amount.")
         else:
             raise ValueError("Section not found")
         
     def move_stock(self, from_section_name, to_section_name, item_name, amount):
         from_section = self.get_section(from_section_name)
         to_section = self.get_section(to_section_name)
-        if from_section and to_section:
+        if from_section == to_section:
+            raise ValueError("To and from destination must not be the same.")
+        elif from_section and to_section:
             try:
                 from_section.remove_stock(item_name, amount)
                 to_section.add_stock(item_name, amount, "m")
             except ValueError as e:
                 raise ValueError(e)
         else:
-            raise ValueError("Section(s) not found")
+            raise ValueError("Invalid section has been entered.")
         
     def get_inventory(self):
         inventory = []

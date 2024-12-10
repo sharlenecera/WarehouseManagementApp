@@ -82,23 +82,46 @@ class WarehouseApp(tk.Tk):
     def add_item(self):
         section_name = self.section_var.get()
         name = self.add_item_name.get()
-        quantity = int(self.add_item_quantity.get())
+        try:
+            quantity = int(self.add_item_quantity.get())
+        except ValueError as e:
+            messagebox.showerror("Error", "Quantity is invalid.")
+            return
+            
         if section_name and name and quantity >= 0:
             if self.add_item_expiry.get():
                 print("You tried to add a perishable item")
                 item = PerishableItem(name, quantity, self.add_item_expiry.get())
+            elif self.inventory_manager.sections[section_name].get_item(name):
+                messagebox.showerror("Error", "An item with the same name exists. Did you want to add stock?")
+                return
             else:
                 print("You tried to add a regular item")
                 item = RegularItem(name, quantity)
             self.inventory_manager.add_item(section_name, item)
             self.update_inventory()
+        elif quantity < 0:
+            messagebox.showerror("Error", "Quantity is invalid.")
         else:
-            messagebox.showerror("Error", "Invalid item details")
+            messagebox.showerror("Missing field", "A Section, Item Name and Quantity is required to add an item.")
 
     def add_stock(self):
         section_name = self.section_var.get()
         name = self.add_item_name.get()
-        amount = int(self.stock_amount.get())
+        try:
+            amount = int(self.stock_amount.get())
+        except ValueError as e:
+            messagebox.showerror("Error", "Quantity is invalid.")
+            return
+
+        # invalid inputs and error handling
+        if not section_name:
+            messagebox.showerror("Error", "A section, Item Name and Stock Amount is required to add stock.")
+            return
+        elif amount <= 0:
+            messagebox.showerror("Error", "Quantity is invalid.")
+            return
+        
         try:
             self.inventory_manager.add_stock(section_name, name, amount)
             self.update_inventory()
@@ -108,7 +131,20 @@ class WarehouseApp(tk.Tk):
     def remove_stock(self):
         section_name = self.section_var.get()
         name = self.add_item_name.get()
-        amount = int(self.stock_amount.get())
+        try:
+            amount = int(self.stock_amount.get())
+        except ValueError as e:
+            messagebox.showerror("Error", "Quantity is invalid.")
+            return
+
+        # invalid inputs and error handling
+        if not section_name:
+            messagebox.showerror("Error", "A section, Item Name and Stock Amount is required to remove stock.")
+            return
+        elif amount <= 0:
+            messagebox.showerror("Error", "Quantity is invalid.")
+            return
+        
         try:
             self.inventory_manager.remove_stock(section_name, name, amount)
             self.update_inventory()
@@ -119,7 +155,20 @@ class WarehouseApp(tk.Tk):
         from_section_name = self.section_var.get()
         to_section_name = self.move_to_var.get()
         item_name = self.move_item_name.get()
-        amount = int(self.move_amount.get())
+        try:
+            amount = int(self.move_amount.get())
+        except ValueError as e:
+            messagebox.showerror("Error", "Quantity is invalid.")
+            return
+
+        # invalid inputs and error handling
+        if not from_section_name or not to_section_name:
+            messagebox.showerror("Error", "A Section, Destination Section, Item Name and Stock Amount is required to move stock.")
+            return
+        elif amount <= 0:
+            messagebox.showerror("Error", "Quantity is invalid.")
+            return
+
         try:
             self.inventory_manager.move_stock(from_section_name, to_section_name, item_name, amount)
             self.update_inventory()
