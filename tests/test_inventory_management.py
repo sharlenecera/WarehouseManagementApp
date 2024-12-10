@@ -24,10 +24,27 @@ def test_add_new_item(initial_warehouse_app):
 
     assert item in initial_warehouse_app.inventory_manager.sections["Electronics"].items.values()
 
-# def test_delete_item(initial_warehouse_app):
-#     pass
+def test_delete_valid_item(initial_warehouse_app):
+    # Adding an item to delete
+    name = "Tablet"
+    quantity = 0
+    section_name = "Electronics"
+    item = RegularItem(name, quantity)
 
-#     # implement this
+    section = initial_warehouse_app.inventory_manager.sections[section_name]
+    section.add_item(item)
+
+    # Check item exists
+    assert section.get_item(name)
+
+    # Delete item
+    deleted_item = section.delete_item(name)
+
+    # Verify the deleted item is correct
+    assert item == deleted_item
+
+    # Verify the deleted item is no longer in the section
+    assert section.get_item(name) == None
 
 def test_add_stock(stocked_warehouse_app):
 

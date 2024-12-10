@@ -16,6 +16,12 @@ class InventorySection:
     def add_item(self, item):
         self.items[item.name] = item
 
+    def delete_item(self, item_name):
+        if self.get_item(item_name):
+            return self.__items.pop(item_name)
+        else:
+            raise ValueError("Item not found.")
+
     def get_item(self, name):
         return self.items.get(name)
     

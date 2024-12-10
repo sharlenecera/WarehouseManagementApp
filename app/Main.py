@@ -51,6 +51,9 @@ class WarehouseApp(tk.Tk):
         self.add_item_button = tk.Button(self, text="Add Item", command=self.add_item)
         self.add_item_button.pack()
 
+        self.delete_item_button = tk.Button(self, text="Delete Item", command=self.delete_item)
+        self.delete_item_button.pack()
+
         # UI for Managing stock
         self.create_add_widget("Stock Amount")
         self.add_stock_button = tk.Button(self, text="Add Stock", command=self.add_stock)
@@ -120,6 +123,24 @@ class WarehouseApp(tk.Tk):
             messagebox.showerror("Error", "Quantity is invalid.")
         else:
             messagebox.showerror("Missing field", "A Section, Item Name and Quantity is required to add an item.")
+
+    def delete_item(self):
+        section_name = self.section_var.get()
+        item_name = self.add_item_name.get()
+
+        if section_name and self.inventory_manager.sections[section_name].get_item(item_name):
+            if self.inventory_manager.sections[section_name].get_item(item_name).quantity > 0:
+                messagebox.showerror("Error", "Only items with no stock can be deleted.")
+            else:
+                try:
+                    self.inventory_manager.delete_item(section_name, item_name)
+                    self.update_inventory()
+                    self.clear_fields()
+                except KeyError as e:
+                    messagebox.showerror("Error", str(e))
+        else:
+            messagebox.showerror("Missing field", "Item from given section not found.")
+
 
     def add_stock(self):
         section_name = self.section_var.get()

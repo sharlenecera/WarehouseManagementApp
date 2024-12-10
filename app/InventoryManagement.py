@@ -28,6 +28,13 @@ class InventoryManager:
         else:
             raise ValueError("Section not found")
         
+    def delete_item(self, section_name, item_name):
+        section = self.get_section(section_name)
+        if section:
+            section.delete_item(item_name)
+        else:
+            raise ValueError("Section not found")
+                
     def get_items_in_section(self, section_name):
         section = self.get_section(section_name)
         if section:
