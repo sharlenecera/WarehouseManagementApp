@@ -64,6 +64,14 @@ class InventoryManager:
             inventory.extend(str(item) for item in section.items.values())
         return inventory
     
+    def search_inventory(self, search):
+        results = []
+        for section in self.sections.values():
+            if search.lower() in section.name.lower():
+                results.append(str(section))
+                results.extend(str(item) for item in section.items.values())
+        return results
+    
     def save_to_json(self, file_name):
         content = {}
         for section in self.sections.values():

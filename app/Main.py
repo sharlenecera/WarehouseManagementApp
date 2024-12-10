@@ -76,6 +76,12 @@ class WarehouseApp(tk.Tk):
         command=self.move_stock)
         self.move_stock_button.pack()
 
+        # UI for Search functionality
+        tk.Label(self, text="Search Section").pack()
+        self.search_entry = tk.Entry(self)
+        self.search_entry.pack()
+        self.search_entry.bind("<KeyRelease>", self.search_inventory)  # Bind the search entry to the KeyRelease event
+
         # UI for Inventory Display
         self.inventory_text = tk.Text(self, height=15, width=50)
         self.inventory_text.pack()
@@ -183,11 +189,20 @@ class WarehouseApp(tk.Tk):
         except ValueError as e:
             messagebox.showerror("Error", str(e))
 
+    def format_inventory_text(self, inventory):
+        for item in inventory:
+            self.inventory_text.insert(tk.END, item + "\n")
+
     def update_inventory(self):
         self.inventory_text.delete(1.0, tk.END)
         inventory = self.inventory_manager.get_inventory()
-        for item in inventory:
-            self.inventory_text.insert(tk.END, item + "\n")
+        self.format_inventory_text(inventory)
+
+    def search_inventory(self, event):
+        search = self.search_entry.get()
+        results = self.inventory_manager.search_inventory(search)
+        self.inventory_text.delete(1.0, tk.END)
+        self.format_inventory_text(results)
 
     def save_to_json(self):
         file_name = filedialog.asksaveasfilename(
