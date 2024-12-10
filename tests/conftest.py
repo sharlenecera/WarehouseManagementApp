@@ -8,6 +8,20 @@ from Sections import InventorySection
 from RegularItems import RegularItem, PerishableItem
 
 @pytest.fixture
+def valid_login_details():
+    return {
+        "username": "test",
+        "password": "test"
+    }
+
+@pytest.fixture
+def invalid_login_details():
+    return {
+        "username": "admin",
+        "password": "admin"
+    }
+
+@pytest.fixture
 def initial_warehouse_app():
     inventory_manager = InventoryManager()
     # Adding initial sections

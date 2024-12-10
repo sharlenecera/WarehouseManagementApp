@@ -4,6 +4,7 @@ from tkinter import messagebox, simpledialog, filedialog
 from InventoryManagement import InventoryManager
 from Sections import InventorySection
 from RegularItems import RegularItem, PerishableItem
+from Login import LoginWindow
 
 # GUI Implementation with Tkinter
 class WarehouseApp(tk.Tk):
@@ -11,7 +12,14 @@ class WarehouseApp(tk.Tk):
         super().__init__()
         self.inventory_manager = inventory_manager
         self.title("Warehouse Management System")
+        self.show_login_window()        
 
+    def show_login_window(self):
+        self.login_window = LoginWindow(self, self.show_inventory_app)
+        self.login_window.pack(pady=20)
+
+    def show_inventory_app(self):
+        self.login_window.pack_forget()
         self.create_widgets()
         self.update_inventory()
 
