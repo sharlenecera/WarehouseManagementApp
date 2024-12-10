@@ -2,8 +2,16 @@ from RegularItems import RegularItem, PerishableItem
 
 class InventorySection:
     def __init__(self, name):
-        self.name = name
-        self.items = {} # dict
+        self.__name = name
+        self.__items = {} # dict
+
+    @property
+    def name(self):
+        return self.__name
+    
+    @property
+    def items(self):
+        return self.__items
 
     def add_item(self, item):
         self.items[item.name] = item

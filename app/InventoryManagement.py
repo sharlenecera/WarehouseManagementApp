@@ -5,7 +5,15 @@ from RegularItems import RegularItem, PerishableItem
 
 class InventoryManager:
     def __init__(self):
-        self.sections = {} # dict
+        self.__sections = {} # dict
+
+    @property
+    def sections(self):
+        return self.__sections
+    
+    @sections.setter
+    def sections(self, sections):
+        self.__sections = sections
 
     def add_section(self, section):
         self.sections[section.name] = section

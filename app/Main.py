@@ -10,9 +10,13 @@ from Login import LoginWindow
 class WarehouseApp(tk.Tk):
     def __init__(self, inventory_manager):
         super().__init__()
-        self.inventory_manager = inventory_manager
+        self.__inventory_manager = inventory_manager
         self.title("Warehouse Management System")
-        self.show_login_window()        
+        self.show_login_window() 
+        
+    @property
+    def inventory_manager(self):
+        return self.__inventory_manager       
 
     def show_login_window(self):
         self.login_window = LoginWindow(self, self.show_inventory_app)
