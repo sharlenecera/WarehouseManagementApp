@@ -1,3 +1,8 @@
+import json
+
+from Sections import InventorySection
+from RegularItems import RegularItem, PerishableItem
+
 class InventoryManager:
     def __init__(self):
         self.sections = {} # dict
@@ -56,3 +61,24 @@ class InventoryManager:
             inventory.append(str(section))
             inventory.extend(str(item) for item in section.items.values())
         return inventory
+    
+    def save_to_json(self, file_name):
+        content = {}
+        for section in self.sections.values():
+            section_value = {}
+            for item in section.items.values():
+                section_value[item.name] = item.quantity
+            content[section.name] = section_value
+        with open(file_name, 'w') as file:
+            json.dump(content, file)
+
+    def load_from_json(self, file_name):
+        with open(file_name, 'r') as file:
+            content = json.load(file)
+        # overwriting the current dictionary
+        self.sections = {}
+        for section_name in content:
+            section = InventorySection(section_name)
+            for item_name in content[section_name]:
+                section.add_item(RegularItem(item_name, content[section_name][item_name]))
+            self.add_section(section)
