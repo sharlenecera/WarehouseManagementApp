@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox, simpledialog, filedialog
+import datetime
 
 from InventoryManagement import InventoryManager
 from Sections import InventorySection
@@ -12,6 +13,8 @@ class WarehouseApp(tk.Tk):
         super().__init__()
         self.__inventory_manager = inventory_manager
         self.title("Warehouse Management System")
+        self.date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
         self.show_login_window() 
         
     @property
@@ -25,7 +28,13 @@ class WarehouseApp(tk.Tk):
     def show_inventory_app(self):
         self.login_window.pack_forget()
         self.create_widgets()
+        app.update_date()
         self.update_inventory()
+
+    def update_date(self):
+        self.date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        self.date_label.config(text=self.date)
+        self.after(1000, self.update_date)
 
     def create_add_widget(self, text, add_bool=False, varName=""):
         tk.Label(self, text=text).pack()
@@ -36,6 +45,10 @@ class WarehouseApp(tk.Tk):
         self.__dict__[var_name].pack()
 
     def create_widgets(self):
+        # Date
+        self.date_label = tk.Label(self, text=f"Date: {self.date}")
+        self.date_label.pack(pady=20)
+
         # Section selection
 
         tk.Label(self, text="Select Section").pack()
