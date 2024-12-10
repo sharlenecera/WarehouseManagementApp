@@ -92,7 +92,19 @@ class InventoryManager:
         for section in self.sections.values():
             section_value = {}
             for item in section.items.values():
-                section_value[item.name] = item.quantity
+                try:
+                    if item.expiry_date:
+                        section_value[item.name] = {
+                            "name": item.name,
+                            "quantity": item.quantity,
+                            "expiry date": item.expiry_date
+                        }
+                except AttributeError:
+                    # No expiry date means it is a regular item
+                    section_value[item.name] = {
+                        "name": item.name,
+                        "quantity": item.quantity,
+                    }
             content[section.name] = section_value
         with open(file_name, 'w') as file:
             json.dump(content, file)
@@ -105,5 +117,8 @@ class InventoryManager:
         for section_name in content:
             section = InventorySection(section_name)
             for item_name in content[section_name]:
-                section.add_item(RegularItem(item_name, content[section_name][item_name]))
+                if section_name == "Groceries and Food Items":
+                    section.add_item(PerishableItem(item_name, content[section_name][item_name]["quantity"], content[section_name][item_name]["expiry date"]))
+                else:
+                    section.add_item(RegularItem(item_name, content[section_name][item_name]["quantity"]))
             self.add_section(section)

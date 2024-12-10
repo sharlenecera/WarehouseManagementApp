@@ -98,10 +98,10 @@ def stocked_warehouse_app():
     inventory_manager.add_section(section)
 
     section = InventorySection("Groceries and Food Items")
-    section.add_item(RegularItem("Rice Bags", 20))
-    section.add_item(RegularItem("Canned Beans", 50))
-    section.add_item(RegularItem("Pasta Packs", 40))
-    section.add_item(RegularItem("Cooking Oil Bottles", 30))
+    section.add_item(PerishableItem("Rice Bags", 20, "25/12/2024"))
+    section.add_item(PerishableItem("Canned Beans", 50, "20/12/2024"))
+    section.add_item(PerishableItem("Pasta Packs", 40, "19/12/2024"))
+    section.add_item(PerishableItem("Cooking Oil Bottles", 30, "29/12/2024"))
     inventory_manager.add_section(section)
     
     section = InventorySection("Office Supplies")
@@ -125,75 +125,75 @@ def stocked_warehouse_app():
 def stocked_warehouse_json():
     return {
         "Electronics": {
-            "Smartphone": 30,
-            "Laptop": 20,
-            "Tablet": 25,
-            "Headphones": 40
+            "Smartphone": { "name": "Smartphone", "quantity": 30 },
+            "Laptop": { "name": "Laptop", "quantity": 20 },
+            "Tablet": { "name": "Tablet", "quantity": 25 },
+            "Headphones": { "name": "Headphones", "quantity": 40 }
         },
         "Automotive": {
-            "Car Battery": 15,
-            "Tire": 50,
-            "Engine Oil": 30,
-            "Brake Pads": 20
+            "Car Battery": { "name": "Car Battery", "quantity": 15 },
+            "Tire": { "name": "Tire", "quantity": 50 },
+            "Engine Oil": { "name": "Engine Oil", "quantity": 30 },
+            "Brake Pads": { "name": "Brake Pads", "quantity": 20 }
         },
         "Home Appliances": {
-            "Refrigerator": 10,
-            "Microwave Oven": 15,
-            "Washing Machine": 8,
-            "Air Conditioner": 12
+            "Refrigerator": { "name": "Refrigerator", "quantity": 10 },
+            "Microwave Oven": { "name": "Microwave Oven", "quantity": 15 },
+            "Washing Machine": { "name": "Washing Machine", "quantity": 8 },
+            "Air Conditioner": { "name": "Air Conditioner", "quantity": 12 }
         },
         "Furniture": {
-            "Office Chair": 20,
-            "Dining Table": 5,
-            "Sofa Set": 7,
-            "Bed Frame": 10
+            "Office Chair": { "name": "Office Chair", "quantity": 20 },
+            "Dining Table": { "name": "Dining Table", "quantity": 5 },
+            "Sofa Set": { "name": "Sofa Set", "quantity": 7 },
+            "Bed Frame": { "name": "Bed Frame", "quantity": 10 }
         },
         "Clothing and Apparel": {
-            "T-Shirts": 50,
-            "Jeans": 40,
-            "Jackets": 30,
-            "Sneakers": 25
+            "T-Shirts": { "name": "T-Shirts", "quantity": 50 },
+            "Jeans": { "name": "Jeans", "quantity": 40 },
+            "Jackets": { "name": "Jackets", "quantity": 30 },
+            "Sneakers": { "name": "Sneakers", "quantity": 25 }
         },
         "Sports Equipment": {
-            "Basketballs": 30,
-            "Tennis Rackets": 20,
-            "Soccer Balls": 25,
-            "Yoga Mats": 15
+            "Basketballs": { "name": "Basketballs", "quantity": 30 },
+            "Tennis Rackets": { "name": "Tennis Rackets", "quantity": 20 },
+            "Soccer Balls": { "name": "Soccer Balls", "quantity": 25 },
+            "Yoga Mats": { "name": "Yoga Mats", "quantity": 15 }
         },
         "Toys and Games": {
-            "Action Figures": 40,
-            "Board Games": 20,
-            "Puzzles": 30,
-            "Dolls": 25
+            "Action Figures": { "name": "Action Figures", "quantity": 40 },
+            "Board Games": { "name": "Board Games", "quantity": 20 },
+            "Puzzles": { "name": "Puzzles", "quantity": 30 },
+            "Dolls": { "name": "Dolls", "quantity": 25 }
         },
         "Books and Stationery": {
-            "Notebooks": 50,
-            "Pens": 100,
-            "Novels": 30,
-            "Textbooks": 20
+            "Notebooks": { "name": "Notebooks", "quantity": 50 },
+            "Pens": { "name": "Pens", "quantity": 100 },
+            "Novels": { "name": "Novels", "quantity": 30 },
+            "Textbooks": { "name": "Textbooks", "quantity": 20 }
         },
         "Health and Beauty": {
-            "Shampoo Bottles": 40,
-            "Toothpaste Tubes": 50,
-            "Face Cream": 30,
-            "Vitamins": 25
+            "Shampoo Bottles": { "name": "Shampoo Bottles", "quantity": 40 },
+            "Toothpaste Tubes": { "name": "Toothpaste Tubes", "quantity": 50 },
+            "Face Cream": { "name": "Face Cream", "quantity": 30 },
+            "Vitamins": { "name": "Vitamins", "quantity": 25 }
         },
         "Groceries and Food Items": {
-            "Rice Bags": 20,
-            "Canned Beans": 50,
-            "Pasta Packs": 40,
-            "Cooking Oil Bottles": 30
+            "Rice Bags": { "name": "Rice Bags", "quantity": 20, "expiry date": "25/12/2024" },
+            "Canned Beans": { "name": "Canned Beans", "quantity": 50, "expiry date": "20/12/2024" },
+            "Pasta Packs": { "name": "Pasta Packs", "quantity": 40, "expiry date": "19/12/2024" },
+            "Cooking Oil Bottles": { "name": "Cooking Oil Bottles", "quantity": 30, "expiry date": "29/12/2024" }
         },
         "Office Supplies": {
-            "Printer Paper Reams": 50,
-            "Staplers": 20,
-            "File Folders": 40,
-            "Desk Lamps": 15
+            "Printer Paper Reams": { "name": "Printer Paper Reams", "quantity": 50 },
+            "Staplers": { "name": "Staplers", "quantity": 20 },
+            "File Folders": { "name": "File Folders", "quantity": 40 },
+            "Desk Lamps": { "name": "Desk Lamps", "quantity": 15 }
         },
         "Tools and Hardware": {
-            "Hammers": 25,
-            "Screwdriver Sets": 30,
-            "Wrenches": 20,
-            "Drill Machines": 10
+            "Hammers": { "name": "Hammers", "quantity": 25 },
+            "Screwdriver Sets": { "name": "Screwdriver Sets", "quantity": 30 },
+            "Wrenches": { "name": "Wrenches", "quantity": 20 },
+            "Drill Machines": { "name": "Drill Machines", "quantity": 10 }
         }
     }
